@@ -1,3 +1,68 @@
 .bg-main{
   background-color: #041630;
+  color: white;
+
+}
+
+div {
+  font-family: 'Zilla Slab', serif;
+  color: white;
+}
+
+.text-big{
+  letter-spacing: 0.1em;
+  font-size: 3em;
+  font-weight: bold;
+}
+
+.text-link{
+  letter-spacing: 0.1em;
+  font-size: 1.8em;
+}
+
+.text-form{
+  letter-spacing: 0.1em;
+  font-size: 1.2em;  
+}
+
+.text-btn{
+  letter-spacing: 0.1em;
+  font-size: 1.8em;
+}
+
+.m-top{
+  margin-top: 10em;
+}
+
+.m-x{
+  margin-left: 5em;
+  margin-right: 5em;
+}
+
+.p-left{
+  padding-left: 8em;
+}
+
+.navbar {
+  border-bottom: 2px solid rgb(3, 116, 197);
+}
+
+.my-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.img-home{
+  height: 600px;
+}
+
+@media screen and (max-width: 768px) {
+  .img-home{
+    height: 450px;
+  }
+  .p-left{
+    padding-left: 1em;
+  }
 }
