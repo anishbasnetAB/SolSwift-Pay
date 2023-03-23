@@ -1,4 +1,5 @@
 import React from 'react'
+import ConectWallet from '../solona/wallet'
 
 const Payment = () => {
   return (
@@ -13,18 +14,8 @@ const Payment = () => {
     <div className='pb-5 mt-5'>
       <h1>Make Your Transaction</h1>
     </div>
-    <form>
-      <div className="mb-3">
-        <label htmlFor="walletAddress" className="form-label">
-          Sender Wallet Address
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="walletAddress"
-          placeholder="Enter wallet address"
-        />
-      </div>
+    <ConectWallet/>
+    <form className='mt-5'>
 
       <div className="mb-3">
         <label htmlFor="walletAddress" className="form-label">
@@ -68,14 +59,8 @@ const Payment = () => {
     </form>
   </div>
 </div>
-
-
-
-
-
-
-
   )
 }
+
 
 export default Payment

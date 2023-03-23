@@ -2,7 +2,7 @@ import Home from "./components/Home";
 import Payment from "./components/Payment";
 import Navbar from "./components/Navbar";
 import {Route,Routes} from "react-router-dom";
-
+import ConectWallet from "./solona/wallet";
 
 
 
@@ -16,6 +16,7 @@ function App() {
       <Route path="/" element={<Home />} />
         <Route path="/payment" element={<Payment />} />
       </Routes>
+      
     </div>
     
   )
