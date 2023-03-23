@@ -1,8 +1,43 @@
+i am making react website where a user can connect wallet, and after connecting the user can send the token to other person from  my website through the connected wallet. The website has 3 input field first one to get receiver public address, 2nd amount and 3rd to select token. I made two component, wallet.jsx has code to connect wallet in website and another file payment.jsx this has form field, and transaction logic but for some reason its not working please help me. here is code for wallet.jsx        import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { clusterApiUrl } from '@solana/web3.js';
+import React, { useState, useMemo } from 'react';
 
+import '@solana/wallet-adapter-react-ui/styles.css';
+import { GlowWalletAdapter, LedgerWalletAdapter, SolletExtensionWalletAdapter, SolletWalletAdapter, TorusWalletAdapter } from '@solana/wallet-adapter-wallets';
 
+function ConnectWallet({ onConnect }) {
+  // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
+  const network = WalletAdapterNetwork.Devnet;
+
+  // You can also provide a custom RPC endpoint.
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
+  const wallets = useMemo(() => [new GlowWalletAdapter(), new SolletExtensionWalletAdapter(), new SolletWalletAdapter(), new LedgerWalletAdapter(), new TorusWalletAdapter()], [network]);
+
+  const handleConnect = (wallet) => {
+    if (wallet) {
+      onConnect(wallet);
+    }
+  };
+
+  return (
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets} autoConnect={false}>
+        <WalletModalProvider>
+          <WalletMultiButton onConnect={handleConnect} />
+        </WalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
+  );
+}
+
+export default ConnectWallet;
+here is code for payment.jsx  
 import React, { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import ConnectWallet from '../solona/wallet';
+import ConectWallet from '../solona/wallet';
 import { Connection, PublicKey, Transaction, SystemProgram, sendAndConfirmTransaction } from '@solana/web3.js';
 
 const Payment = () => {
@@ -17,7 +52,7 @@ const Payment = () => {
   
     const connection = new Connection("https://api.devnet.solana.com");
     const publicKey = new PublicKey(receiverAddress);
-    const lamports = parseFloat(amount) * 10 ** 9; // Convert SOL to lamports
+    const lamports = amount * 10 ** 9; // Convert SOL to lamports
     const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: wallet.publicKey,
@@ -30,7 +65,7 @@ const Payment = () => {
     const signature = await sendAndConfirmTransaction(
       connection,
       transaction,
-      [wallet.publicKey]
+      [wallet.payer]
     );
   
     console.log(`Transaction ${signature} confirmed`);
@@ -42,7 +77,7 @@ const Payment = () => {
         <div className='pb-5 mt-5'>
           <h1>Make Your Transaction</h1>
         </div>
-        <ConnectWallet />
+        <ConectWallet />
         <form className='mt-5' onSubmit={handleFormSubmit}>
           <div className="mb-3">
             <label htmlFor="walletAddress" className="form-label">
